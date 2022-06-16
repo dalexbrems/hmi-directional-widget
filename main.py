@@ -9,7 +9,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Widget Example")
-        self.setGeometry(700, 500, 200, 100)
+        self.setGeometry(700, 500, 300, 100)
 
         self.main_widget = QWidget(self)
         self.setCentralWidget(self.main_widget)
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.widget.setStyleSheet('font-size: 30px; font-weight: 700;'
                                   ' background-color: rgb(13, 147, 214, 0.33);')
 
-        self.widget.setText('Hallo')
+        # self.widget.setText('Hallo')
         # self.widget.setState(DisplayState.NORMAL)
         self.central_layout.addWidget(self.widget)
 
@@ -40,14 +40,15 @@ class MainWindow(QMainWindow):
         self.central_layout.addLayout(self.btn_layout)
 
     def decrement(self):
-        self.widget.setState(DisplayState.DEC)
+        # self.widget.setState(DisplayState.DOUBLE_DEC)
+        self.widget.decrement_state()
 
     def clear(self):
         self.widget.setState(DisplayState.NORMAL)
 
     def increment(self):
-        self.widget.setState(DisplayState.INC)
-
+        # self.widget.setState(DisplayState.DOUBLE_INC)
+        self.widget.increment_state()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
