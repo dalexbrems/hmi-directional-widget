@@ -29,7 +29,7 @@ class _ArrowBox(QWidget):
     def __init__(self, orientation, is_inc, color_1, color_2, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._orientation = orientation
-        self.is_inc = is_inc
+        self._is_inc = is_inc
         self._is_double = False
 
         self._color_1 = color_1
@@ -65,7 +65,6 @@ class _ArrowBox(QWidget):
     def paint_angle(self):
         """paints one or two chevrons with the respective orientation on the canvas"""
         painter = QtGui.QPainter(self)
-        painter.begin(self)
 
         # enable antialiasing to prevent artifacts ("Jaggies")
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
@@ -88,7 +87,7 @@ class _ArrowBox(QWidget):
         xc = int(width / 2)  # x center
         yc = int(height / 2)  # y center
 
-        if self.is_inc:
+        if self._is_inc:
             #  first chevron draw first line
             angleLine = QtCore.QLineF()
             angleLine.setP1(QtCore.QPoint(xc, yc))
@@ -214,6 +213,7 @@ class _ArrowBox(QWidget):
 class DirectionWidget(QWidget):
     """directional widget for indicating the user a increment or decrement in state"""
     # signals need to be defined as class variables
+
     textChanged = pyqtSignal(str)
     stateChanged = pyqtSignal(DisplayState)
 

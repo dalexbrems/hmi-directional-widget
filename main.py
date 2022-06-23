@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         self.central_layout = QVBoxLayout(self)
         self.main_widget.setLayout(self.central_layout)
 
-        self.widget = DirectionWidget(text='Extra Extra Large Text', orientation=Qt.Horizontal, parent=self)
+        self.widget = DirectionWidget(text='Extra Extra Large Text', orientation=Qt.Horizontal, color_1=Qt.red, color_2=Qt.darkRed, parent=self)
         self.widget.setStyleSheet('font-size: 30px; font-weight: 700;')
 
         self.widget_2 = DirectionWidget(text='E', orientation=Qt.Vertical, parent=self)
