@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on 15.04.2022
+Created on 26.06.2022
 
 Author: Daniel Brems
 """
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QPushButton, QGridLayout
 from directional_advice import DirectionWidget, DisplayState
 from PyQt5.QtCore import Qt
 
@@ -14,35 +14,34 @@ from PyQt5.QtCore import Qt
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Widget Example")
+        self.setWindowTitle("Widget Example with Grid Layout")
         self.setGeometry(700, 500, 300, 100)
 
         self.main_widget = QWidget(self)
         self.setCentralWidget(self.main_widget)
-        self.central_layout = QVBoxLayout(self)
+        self.central_layout = QGridLayout(self)
         self.main_widget.setLayout(self.central_layout)
 
-        self.widget = DirectionWidget(text='H', orientation=Qt.Horizontal, color_1=Qt.red, color_2=Qt.darkRed,
-                                      parent=self)
+        self.widget = DirectionWidget(text='H', orientation=Qt.Horizontal, color_1=Qt.red, color_2=Qt.darkRed, parent=self)
         self.widget.setStyleSheet('font-size: 30px; font-weight: 700;')
 
         self.widget_2 = DirectionWidget(text='E', orientation=Qt.Vertical, parent=self)
         self.widget_2.setStyleSheet('font-size: 25px; font-weight: 700;')
 
-        self.widget_3 = DirectionWidget(text='Y', orientation=Qt.Horizontal, color_1=Qt.green, color_2=Qt.darkGreen,
+        self.widget_3 = DirectionWidget(text='Y', orientation=Qt.Vertical, color_1=Qt.green, color_2=Qt.darkGreen,
                                       parent=self)
         self.widget.setStyleSheet('font-size:20px; font-weight: 700;')
 
-        self.widget_4 = DirectionWidget(text='!', orientation=Qt.Vertical, color_1=Qt.magenta, color_2=Qt.darkMagenta,
+        self.widget_4 = DirectionWidget(text='!', orientation=Qt.Horizontal, color_1=Qt.magenta, color_2=Qt.darkMagenta,
                                       parent=self)
 
 
         # self.widget.setText('1')
         self.widget.setState(DisplayState.NORMAL)
-        self.central_layout.addWidget(self.widget)
-        self.central_layout.addWidget(self.widget_2)
-        self.central_layout.addWidget(self.widget_3)
-        self.central_layout.addWidget(self.widget_4)
+        self.central_layout.addWidget(self.widget, 0, 0)
+        self.central_layout.addWidget(self.widget_2, 0, 1)
+        self.central_layout.addWidget(self.widget_3, 1, 0)
+        self.central_layout.addWidget(self.widget_4, 1, 1)
 
         self.widget_list = [self.widget, self.widget_2, self.widget_3, self.widget_4]
 
@@ -65,7 +64,7 @@ class MainWindow(QMainWindow):
         self.btn_layout.addWidget(self.btn_inc)
         self.btn_layout.addWidget(self.btn_ch_text)
 
-        self.central_layout.addLayout(self.btn_layout)
+        self.central_layout.addLayout(self.btn_layout, 2, 0, 2, 2)
 
         self.widget.stateChanged.connect(self.print_new_state)
         self.widget_2.stateChanged.connect(self.print_new_state)
@@ -93,10 +92,12 @@ class MainWindow(QMainWindow):
             w.increment()
 
     def change_text(self):
-        if self.widget.text == 'S':
-            self.widget.setText('Extra Extra Large Text')
-        else:
-            self.widget.setText('S')
+        for w in self.widget_list:
+            if w.text == 'S':
+                w.setText('Extra Extra Large Text')
+            else:
+                w.setText('S')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
